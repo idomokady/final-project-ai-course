@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>עידו מוקדי · מטמיע AI בפסגת העיר — פרויקט סיום</title>
+<meta name="description" content="פרויקט סיום בקורס אוטומציות ו-AI מאת עידו מוקדי: אוטומציה מקצה-לקצה של פרוטוקול הריג'קטים בהתחדשות עירונית, עם Make.com, Telegram, Google Cloud Vision ו-AI Agent.">
+<meta property="og:title" content="מטמיע AI בפסגת העיר — פרויקט סיום מאת עידו מוקדי">
+<meta property="og:description" content="אוטומציה מקצה-לקצה של פרוטוקול הריג'קטים בהתחדשות עירונית — מצילום בשטח ועד משימה מאושרת, בלי הקלדה ידנית.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/make-screenshot.png">
+<meta property="og:locale" content="he_IL">
+<meta name="theme-color" content="#0f2748">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0f2748;
+    --navy-2:#16345e;
+    --steel:#2f5c8f;
+    --accent:#c8a24a;
+    --accent-soft:#e7d6a6;
+    --ink:#1c2733;
+    --muted:#5b6874;
+    --line:#e2e6ec;
+    --bg:#f5f6f8;
+    --card:#ffffff;
+    --green:#1e7d5a;
+    --nav-h:68px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{max-width:100%;overflow-x:hidden}
+  body{
+    font-family:"Heebo","Segoe UI","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  section{scroll-margin-top:var(--nav-h)}
+  h2{font-size:26px;color:var(--navy);font-weight:700;margin-bottom:6px;letter-spacing:-.2px}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+  .lead{color:var(--muted);font-size:16px;max-width:720px;margin-bottom:32px}
+  p{margin-bottom:14px}
+
+  @media(prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{animation-duration:.001s !important;transition-duration:.001s !important}
+  }
+
+  /* ---------- Top Nav ---------- */
+  .topnav{position:sticky;top:0;z-index:100;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .brand{display:flex;flex-direction:column;color:#fff;text-decoration:none;line-height:1.25}
+  .brand b{font-size:16px;font-weight:800;letter-spacing:-.2px}
+  .brand span{font-size:11.5px;color:var(--accent-soft);letter-spacing:.5px}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  .nav-links a{color:#cdd8e6;text-decoration:none;font-size:14.5px;font-weight:500;transition:color .15s}
+  .nav-links a:hover,.nav-links a.active{color:#fff}
+  .nav-cta{background:var(--accent);color:var(--navy) !important;font-weight:700 !important;padding:9px 18px;border-radius:8px;transition:transform .15s,box-shadow .15s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(200,162,74,.35)}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+  .nav-toggle span{width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 60%,var(--steel) 130%);
+    color:#fff;padding:0;position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 85% 15%,rgba(200,162,74,.18),transparent 40%),
+      radial-gradient(circle at 10% 90%,rgba(47,92,143,.35),transparent 45%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:1;padding:76px 24px 68px;max-width:1080px;margin:0 auto}
+  .badge{display:inline-block;border:1px solid rgba(231,214,166,.5);color:var(--accent-soft);
+    font-size:12px;font-weight:600;letter-spacing:1.5px;padding:6px 14px;border-radius:40px;margin-bottom:24px}
+  header.hero h1{font-size:44px;line-height:1.2;font-weight:800;letter-spacing:-.5px;margin-bottom:16px}
+  header.hero .sub{font-size:19px;color:#cdd8e6;max-width:640px;margin-bottom:14px}
+  header.hero .meta{font-size:14px;color:#93a6be;margin-top:28px;display:flex;gap:26px;flex-wrap:wrap}
+  header.hero .meta b{color:#fff;font-weight:600}
+  .hero-by{font-size:14px;color:#93a6be;margin-top:6px}
+  .hero-by a{color:var(--accent-soft)}
+  .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;padding:12px 22px;
+    border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-gold{background:var(--accent);color:var(--navy)}
+  .btn-gold:hover{box-shadow:0 8px 20px rgba(200,162,74,.3)}
+  .btn-outline{border:1px solid rgba(255,255,255,.35);color:#fff}
+  .btn-outline:hover{background:rgba(255,255,255,.08)}
+
+  /* ---------- Stat strip ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:44px}
+  .stat{background:var(--card);padding:26px 20px;text-align:center}
+  .stat .num{font-size:30px;font-weight:800;color:var(--navy);line-height:1.1}
+  .stat .num small{font-size:15px;font-weight:700;color:var(--steel)}
+  .stat .lbl{font-size:13px;color:var(--muted);margin-top:8px}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in-view{opacity:1;transform:translateY(0)}
+
+  /* ---------- Cards ---------- */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;
+    box-shadow:0 1px 2px rgba(15,39,72,.04);transition:transform .18s ease,box-shadow .18s ease}
+  .card h3{font-size:17px;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .card p{font-size:14.5px;color:var(--muted);margin-bottom:0}
+  .card-link{display:block;text-decoration:none;color:inherit}
+  .card-link .card:hover,.card.hoverable:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(15,39,72,.1)}
+  .dl-hint{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--steel)}
+  .chip{display:inline-block;background:#eef2f7;color:var(--steel);font-size:12px;font-weight:600;
+    padding:4px 10px;border-radius:6px;margin:0 0 8px 6px}
+  .tag-num{width:30px;height:30px;flex:0 0 30px;border-radius:8px;background:var(--navy);color:#fff;
+    font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+
+  /* ---------- Problem callout ---------- */
+  .callout{background:linear-gradient(180deg,#fbf7ec,#fff);border:1px solid var(--accent-soft);
+    border-radius:14px;padding:28px 30px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .callout .big{font-size:40px;font-weight:800;color:var(--accent);line-height:1;flex:0 0 auto}
+  .callout .txt{flex:1;min-width:240px}
+  .callout .txt b{color:var(--navy)}
+
+  /* ---------- Flow steps ---------- */
+  .flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:8px}
+  .fstep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;position:relative;transition:transform .18s ease,box-shadow .18s ease}
+  .fstep:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(15,39,72,.08)}
+  .fstep .ic{font-size:22px}
+  .fstep .t{font-size:13px;font-weight:700;color:var(--navy);margin-top:8px}
+  .fstep .d{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+  .fstep::before{content:"‹";position:absolute;left:-11px;top:50%;transform:translateY(-50%);
+    color:var(--accent);font-size:22px;font-weight:700}
+  .flow .fstep:first-child::before{display:none}
+  .flow-note{font-size:13px;color:var(--muted);margin-top:16px;padding:12px 16px;background:#eef2f7;border-radius:10px}
+
+  .flowimg{margin-top:26px;text-align:center}
+  .flowimg img{max-width:100%;border:1px solid var(--line);border-radius:14px;box-shadow:0 6px 22px rgba(15,39,72,.08);cursor:zoom-in;transition:box-shadow .18s ease,transform .18s ease}
+  .flowimg img:hover{box-shadow:0 10px 28px rgba(15,39,72,.14);transform:translateY(-2px)}
+  .flowimg span{display:block;font-size:12.5px;color:var(--muted);margin-top:10px}
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{position:fixed;inset:0;background:rgba(10,18,32,.88);display:none;align-items:center;justify-content:center;
+    z-index:200;padding:40px 20px;cursor:zoom-out}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .lightbox-close{position:absolute;top:22px;left:28px;color:#fff;font-size:28px;background:none;border:0;cursor:pointer;line-height:1}
+
+  /* ---------- KPI table ---------- */
+  .table-scroll{max-width:100%;overflow-x:auto;border-radius:14px}
+  table{width:100%;min-width:560px;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);font-size:14.5px}
+  th,td{padding:15px 18px;text-align:right;border-bottom:1px solid var(--line)}
+  th{background:var(--navy);color:#fff;font-weight:600;font-size:13.5px}
+  tr:last-child td{border-bottom:none}
+  td .before{color:#a04040}
+  td .after{color:var(--green);font-weight:700}
+  .arrow{color:var(--muted);padding:0 6px}
+
+  /* ---------- Tech pills ---------- */
+  .stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .pill{background:var(--card);border:1px solid var(--line);border-radius:40px;padding:9px 18px;font-size:14px;
+    color:var(--navy);font-weight:600;display:flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
+  .pill:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(15,39,72,.08)}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+  /* ---------- About / Creator ---------- */
+  #about{background:linear-gradient(180deg,#fbfbfc,var(--bg))}
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:start}
+  .about-bio p{color:var(--ink);font-size:15.5px}
+  .about-bio .stack{margin-top:18px}
+  .contact-card{background:var(--navy);color:#fff;border-radius:16px;padding:30px 26px;border:1px solid var(--navy-2)}
+  .contact-card h3{color:#fff;font-size:19px;margin-bottom:4px}
+  .contact-card .role{color:var(--accent-soft);font-size:13.5px;font-weight:600;margin-bottom:20px}
+  .contact-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+  .contact-list li a{display:flex;align-items:center;gap:10px;color:#dbe4f0;text-decoration:none;font-size:14.5px;transition:color .15s}
+  .contact-list li a:hover{color:#fff}
+  .contact-list .ic{width:20px;flex:0 0 20px;text-align:center}
+  .contact-card .btn-gold{width:100%;justify-content:center}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy);color:#aebfd4;text-align:center;padding:44px 24px;font-size:14px}
+  footer .cta{display:inline-flex;gap:10px;align-items:center;background:var(--accent);color:var(--navy);
+    font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;margin-bottom:22px;font-size:15px;transition:transform .15s,box-shadow .15s}
+  footer .cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(200,162,74,.3)}
+  footer .foot-links{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  footer .foot-links a{color:#cdd8e6;text-decoration:none;font-size:13.5px}
+  footer .foot-links a:hover{color:#fff}
+  footer .copy{margin-top:18px;color:#6d8099;opacity:.8;font-size:12.5px}
+  footer a{color:var(--accent-soft)}
+
+  @media(max-width:820px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .g2,.g3{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr 1fr}
+    .fstep::before{display:none}
+    header.hero h1{font-size:32px}
+    .about-grid{grid-template-columns:1fr}
+    .nav-toggle{display:flex}
+    .nav-links{position:absolute;top:var(--nav-h);right:0;left:0;background:var(--navy);flex-direction:column;
+      align-items:stretch;padding:10px 24px 22px;gap:6px;border-bottom:1px solid rgba(255,255,255,.08);
+      display:none}
+    .nav-links.open{display:flex}
+    .nav-links a{padding:10px 4px}
+    .nav-cta{text-align:center;margin-top:8px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav" id="topnav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand"><b>עידו מוקדי</b><span>UX Design · AI Automation</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="פתיחת תפריט" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#problem">האתגר</a>
+      <a href="#solution">הפתרון</a>
+      <a href="#kpi">מדדים</a>
+      <a href="#stack">ארכיטקטורה</a>
+      <a href="#about">אודות</a>
+      <a class="nav-cta" href="assets/Ido_Mokady_CV.pdf" target="_blank" rel="noopener">קו״ח ↓</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <span class="badge">פרויקט סיום · קורס אוטומציות ו-AI</span>
+    <h1>מטמיע AI בפסגת העיר</h1>
+    <p class="sub">אוטומציה מקצה-לקצה של פרוטוקול הריג'קטים בהתחדשות עירונית — מצילום בשטח ועד משימה מאושרת במערכת הניהול, בלי הקלדה ידנית.</p>
+    <p class="hero-by">נבנה ואופיין ע"י <a href="#about">עידו מוקדי</a> · יועץ הטמעת AI חיצוני</p>
+    <div class="meta">
+      <span><b>הארגון:</b> פסגת העיר · תמ"א 38 ופינוי-בינוי</span>
+      <span><b>היקף:</b> 18 פרויקטים פעילים · 42 עובדים</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="https://eu1.make.com/public/shared-scenario/3h2F68oBXyq/final-project-v2" target="_blank" rel="noopener">צפייה בתרחיש Make.com החי ↗</a>
+      <a class="btn btn-outline" href="#solution">איך זה עובד ↓</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat reveal"><div class="num"><span class="count" data-target="386.5" data-decimals="1">0</span><small>K ₪</small></div><div class="lbl">חיסכון שנתי צפוי</div></div>
+      <div class="stat reveal"><div class="num"><span class="count" data-target="93" data-decimals="0">0</span><small>%</small></div><div class="lbl">הפחתה בקנסות איחור</div></div>
+      <div class="stat reveal"><div class="num">30→2<small> דק'</small></div><div class="lbl">זמן טיפול בריג'קט</div></div>
+      <div class="stat reveal"><div class="num"><span class="count" data-target="95" data-decimals="0">0</span><small>%+</small></div><div class="lbl">דיוק חילוץ הליקויים</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="eyebrow reveal">האתגר</div>
+    <h2 class="reveal">ריג'קטים על נייר — וקנסות שמצטברים</h2>
+    <p class="lead reveal">מנהלי שטח בפסגת העיר רושמים ליקויים (ריג'קטים) על טופס נייר, מצלמים ושולחים למשרד. שם מזכירה טכנית מקלידה כל ליקוי ידנית ל-Monday. התהליך איטי, נוטה לטעויות, ותלוי בזמינות אנושית — וכל עיכוב בתיקון ליקוי גורר קנס איחור מסירה.</p>
+    <div class="callout reveal">
+      <div class="big">400K ₪</div>
+      <div class="txt"><b>קנסות איחור בשנה.</b> מעל 200,000 ₪ נצברו בחצי השנה האחרונה בלבד, בעיקר בגלל ליקויים שנתקעו בין השטח למערכת. עלות הטיפול הידני: 800 אינטראקציות בחודש × 30 דק' × 75 ₪ לשעה.</div>
+    </div>
+  </section>
+
+  <!-- BOTTLENECK SELECTION -->
+  <section id="bottlenecks">
+    <div class="eyebrow reveal">מיפוי וצווארי בקבוק</div>
+    <h2 class="reveal">שלושה צווארי בקבוק — אחד נבחר לבנייה</h2>
+    <p class="lead reveal">מיפוי הארגון חשף שלושה תהליכים חוסמים. הבחירה נפלה על פרוטוקול הריג'קטים בזכות ה-ROI הברור ביותר והצורך המובהק ב-AI: שילוב של קריאת כתב יד, הבנת תמונה וחילוץ מבנה נתונים.</p>
+    <div class="grid g3">
+      <div class="card reveal">
+        <span class="chip">360K ₪/שנה</span>
+        <h3>פניות דיירים</h3>
+        <p>800 פניות בחודש בטקסט חופשי הדורשות סיווג ידני וחיפוש באקסל. צורך: סיווג טקסט וחילוץ ישויות.</p>
+      </div>
+      <div class="card reveal">
+        <span class="chip">10% טעויות</span>
+        <h3>התאמת חשבוניות</h3>
+        <p>השוואה ידנית של PDF ספק מול Salesforce. צורך: חילוץ מ-PDF וחישוב תמחור מורכב.</p>
+      </div>
+      <div class="card reveal" style="border-color:var(--accent);box-shadow:0 4px 18px rgba(200,162,74,.14)">
+        <span class="chip" style="background:var(--navy);color:#fff">נבחר ✓ · 400K ₪/שנה</span>
+        <h3>פרוטוקול ריג'קטים</h3>
+        <p>OCR של כתב יד + הבנת תמונה + חילוץ משימות מובנה. ה-ROI הגבוה ביותר וה-use-case המובהק ל-AI.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION FLOW -->
+  <section id="solution">
+    <div class="eyebrow reveal">הפתרון</div>
+    <h2 class="reveal">מהצילום למשימה מאושרת — אוטומטית</h2>
+    <p class="lead reveal">תהליך Make.com מקצה-לקצה: מנהל השטח שולח צילום של טופס הריג'קטים לבוט טלגרם, וה-AI קורא, מסווג ומייצר משימות — עם עצירה לאישור אנושי לפני שהמידע נכנס למערכת.</p>
+
+    <div class="flow reveal">
+      <div class="fstep"><div class="ic">📷</div><div class="t">טלגרם בוט</div><div class="d">מנהל שטח שולח צילום הטופס</div></div>
+      <div class="fstep"><div class="ic">🔎</div><div class="t">Cloud Vision</div><div class="d">OCR — תמלול כתב היד</div></div>
+      <div class="fstep"><div class="ic">🤖</div><div class="t">AI Agent</div><div class="d">סיווג לפי קטגוריה ועדיפות → JSON</div></div>
+      <div class="fstep"><div class="ic">👤</div><div class="t">אישור אנושי</div><div class="d">מזכירה טכנית מאשרת לפני עדכון</div></div>
+      <div class="fstep"><div class="ic">✅</div><div class="t">Monday</div><div class="d">משימה נפתחת לכל ליקוי</div></div>
+      <div class="fstep"><div class="ic">📊</div><div class="t">Sheets + דוח</div><div class="d">לוג בזמן אמת + דוח שבועי להנהלה</div></div>
+    </div>
+
+    <div class="flow-note reveal"><b>חוכמה בלוגיקה:</b> Router בודק שקיים צילום לפני העיבוד; מיפוי דינמי <code>last(map(...))</code> תמיד תופס את הרזולוציה הגבוהה ביותר; ומסלול נפרד ל"עומס יתר קריטי" מתריע לסמנכ"ל ההנדסה במקביל להמשך התהליך הרגיל.</div>
+
+    <div class="flowimg reveal">
+      <img src="images/solution_flowchart.png" alt="תרשים זרימה מלא של הפתרון" data-lightbox>
+      <span>תרשים הזרימה המלא של תרחיש ה-Make.com · לחצו להגדלה</span>
+    </div>
+
+    <div class="flowimg reveal">
+      <img src="images/make-screenshot.png" alt="צילום מסך של תרחיש ה-Make.com" data-lightbox>
+      <span>צילום המסך של התרחיש הפעיל ב-Make.com · לחצו להגדלה</span>
+    </div>
+  </section>
+
+  <!-- KPIS -->
+  <section id="kpi">
+    <div class="eyebrow reveal">מדדי הצלחה</div>
+    <h2 class="reveal">שלושה KPIs — יעילות, איכות ו-ROI</h2>
+    <div class="table-scroll reveal">
+    <table>
+      <thead>
+        <tr><th>מדד</th><th>קטגוריה</th><th>לפני</th><th>אחרי</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>זמן מהשטח למשימה</td><td>יעילות</td>
+          <td><span class="before">30 דק' + שעות המתנה</span></td>
+          <td><span class="after">~2 דקות</span></td>
+        </tr>
+        <tr>
+          <td>דיוק חילוץ ריג'קטים</td><td>איכות</td>
+          <td><span class="before">שיעור שגיאה לא ידוע</span></td>
+          <td><span class="after">95%+</span></td>
+        </tr>
+        <tr>
+          <td>קנסות איחור מסירה</td><td>ROI</td>
+          <td><span class="before">400,000 ₪/שנה</span></td>
+          <td><span class="after">13,500 ₪/שנה</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout reveal" style="margin-top:20px">
+      <div class="big">386.5K ₪</div>
+      <div class="txt"><b>חיסכון שנתי נטו — הפחתה של 93% בקנסות.</b> המדדים מנוטרים ב-Google Sheets בזמן אמת, בדוח Make שבועי ובסקירה חודשית.</div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack">
+    <div class="eyebrow reveal">הארכיטקטורה</div>
+    <h2 class="reveal">הכלים שמאחורי התהליך</h2>
+    <p class="lead reveal">כל הרכיבים נבחרו בשיקול של עלות אפס בזמן ההרצה, אמינות בהעברת קבצים בינאריים, ושילוב נייטיב בתוך Make.com.</p>
+    <div class="stack reveal">
+      <div class="pill"><span class="dot"></span>Make.com — תזמור התהליך</div>
+      <div class="pill"><span class="dot"></span>Telegram Bot — קלט מהשטח</div>
+      <div class="pill"><span class="dot"></span>Google Cloud Vision — OCR כתב יד</div>
+      <div class="pill"><span class="dot"></span>Make AI Agent — סיווג ל-JSON</div>
+      <div class="pill"><span class="dot"></span>Monday — ניהול משימות</div>
+      <div class="pill"><span class="dot"></span>Google Sheets — לוג ובקרה</div>
+      <div class="pill"><span class="dot"></span>Slack / Gmail — התראות ואישורים</div>
+    </div>
+    <div class="grid g2" style="margin-top:24px">
+      <div class="card reveal">
+        <h3><span class="tag-num">HITL</span> אדם בתוך הלולאה</h3>
+        <p>המזכירה הטכנית מאשרת את המשימות שנוצרו לפני שהן נכתבות ל-Monday — שילוב של מהירות אוטומטית עם בקרת איכות אנושית.</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="tag-num">⚠︎</span> טיפול בקצוות</h3>
+        <p>צילום לא קריא → בקשה חוזרת להקלדה. אין תגובה תוך 30 דק' → התראה לסמנכ"ל. הודעה בלי צילום → תשובה אוטומטית בבוט.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERABLES -->
+  <section id="deliverables">
+    <div class="eyebrow reveal">התוצרים</div>
+    <h2 class="reveal">מה נבנה והוגש</h2>
+    <div class="grid g3">
+      <a class="card-link reveal" href="https://eu1.make.com/public/shared-scenario/3h2F68oBXyq/final-project-v2" target="_blank" rel="noopener">
+        <div class="card hoverable"><h3>🧩 תרחיש Make.com</h3><p>תהליך מלא ופעיל מקצה-לקצה, כולל Routers, error handler ומיפוי דינמי.</p><span class="dl-hint">צפייה בתרחיש החי ↗</span></div>
+      </a>
+      <a class="card-link reveal" href="assets/citypeak-spec-document.pdf" target="_blank" rel="noopener">
+        <div class="card hoverable"><h3>📄 מסמך אפיון</h3><p>מסמך PDF מלא — מיפוי, צווארי בקבוק, אפיון פתרון, KPIs ותוכנית הטמעה.</p><span class="dl-hint">הורדת ה-PDF ↓</span></div>
+      </a>
+      <div class="card reveal"><h3>🎤 מצגת פיץ'</h3><p>מצגת בת 12 שקפים לכיתה: פיץ' → הדגמה חיה → שאלות ותשובות.</p></div>
+      <a class="card-link reveal" href="assets/citypeak-field-guide.pdf" target="_blank" rel="noopener">
+        <div class="card hoverable"><h3>📋 דף עזר לעובד</h3><p>עמוד אחד למנהל השטח — איך לשלוח ריג'קט לבוט ומה לצפות בתגובה.</p><span class="dl-hint">הורדת ה-PDF ↓</span></div>
+      </a>
+      <div class="card reveal"><h3>📈 מדדי KPI</h3><p>שלושה מדדים עם חישובים, יעדים וויזואליזציה לניטור שוטף.</p></div>
+      <div class="card reveal"><h3>🔄 תוכנית הטמעה</h3><p>ניהול שינוי — הדרגתיות, הדרכת עובדים והתמודדות עם התנגדויות.</p></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" style="border-bottom:none">
+    <div class="eyebrow reveal">אודות</div>
+    <h2 class="reveal">מי מאחורי הפרויקט</h2>
+    <p class="lead reveal">הרקע שהוביל לפתרון הזה, ואיך אפשר להמשיך את השיחה.</p>
+
+    <div class="about-grid">
+      <div class="about-bio reveal">
+        <p>אני <b>עידו מוקדי</b>, מעצב UX עם רקע בפסיכולוגיה, בדרך לתואר שני בנוירומדעים באוניברסיטת תל אביב. אני אוהב לרדת לשורש של תהליך אנושי — מה מעכב אותו, איפה נוצר עומס קוגניטיבי, ואיפה אנשים מוותרים על דיוק בגלל עייפות או שגרה — ואז לתרגם את זה למוצר או לתהליך שבאמת פותר את זה.</p>
+        <p>הפרויקט הזה הוא בדיוק הצומת הזה: הבנה של איך מנהל שטח עובד בפועל (טופס נייר, צילום, המתנה למזכירה) תורגמה לתהליך AI מקצה-לקצה ב-Make.com — עם בקרת איכות אנושית במקום שבו היא באמת נדרשת, לא בכל שלב. אני מחפש להמשיך לשלב בין מחקר משתמשים, עיצוב מוצר ואוטומציית AI — כעצמאי או בתפקיד קבוע.</p>
+        <div class="stack">
+          <div class="pill"><span class="dot"></span>Make.com · AI Agents</div>
+          <div class="pill"><span class="dot"></span>מחקר משתמשים</div>
+          <div class="pill"><span class="dot"></span>Figma · Design Systems</div>
+          <div class="pill"><span class="dot"></span>מיפוי תהליכים</div>
+          <div class="pill"><span class="dot"></span>HTML/CSS · Webflow</div>
+        </div>
+      </div>
+
+      <div class="contact-card reveal">
+        <h3>עידו מוקדי</h3>
+        <div class="role">UX & Product Designer · AI Automation</div>
+        <ul class="contact-list">
+          <li><a href="mailto:idomokady@gmail.com"><span class="ic">✉️</span> idomokady@gmail.com</a></li>
+          <li><a href="tel:+972525219243" dir="ltr" style="justify-content:flex-end"><span class="ic">📞</span> 052-521-9243</a></li>
+          <li><a href="https://linkedin.com/in/idomokady" target="_blank" rel="noopener"><span class="ic">💼</span> linkedin.com/in/idomokady</a></li>
+          <li><a href="https://idomokady.com" target="_blank" rel="noopener"><span class="ic">🌐</span> idomokady.com</a></li>
+          <li style="display:flex;align-items:center;gap:10px;color:#dbe4f0;font-size:14.5px"><span class="ic">📍</span> יפו – תל אביב</li>
+        </ul>
+        <a class="btn btn-gold" href="assets/Ido_Mokady_CV.pdf" target="_blank" rel="noopener">הורדת קורות חיים ↓</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <a class="cta" href="https://eu1.make.com/public/shared-scenario/3h2F68oBXyq/final-project-v2" target="_blank" rel="noopener">צפייה בתרחיש Make.com החי ↗</a>
+  <div class="foot-links">
+    <a href="mailto:idomokady@gmail.com">idomokady@gmail.com</a>
+    <a href="tel:+972525219243" dir="ltr">052-521-9243</a>
+    <a href="https://linkedin.com/in/idomokady" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://idomokady.com" target="_blank" rel="noopener">idomokady.com</a>
+    <a href="assets/Ido_Mokady_CV.pdf" target="_blank" rel="noopener">קורות חיים</a>
+  </div>
+  <div>פרויקט סיום · קורס אוטומציות ו-AI למי שאינו מפתח · פסגת העיר (CityPeak)</div>
+  <div class="copy">© 2026 עידו מוקדי</div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="סגירה">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+(function(){
+  // Mobile nav toggle
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function(){
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ navLinks.classList.remove('open'); });
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // Active nav link highlighting
+  var sections = document.querySelectorAll('section[id]');
+  var navA = navLinks.querySelectorAll('a[href^="#"]');
+  if('IntersectionObserver' in window && sections.length){
+    var navIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = navLinks.querySelector('a[href="#' + entry.target.id + '"]');
+        if(!link) return;
+        if(entry.isIntersecting){
+          navA.forEach(function(a){ a.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, {rootMargin:'-45% 0px -45% 0px'});
+    sections.forEach(function(s){ navIo.observe(s); });
+  }
+
+  // Count-up numbers
+  var counters = document.querySelectorAll('.count');
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-target'));
+    var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    var duration = 1200;
+    var start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = (target * eased).toFixed(decimals);
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if('IntersectionObserver' in window && counters.length){
+    var cIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          animateCount(entry.target);
+          cIo.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.6});
+    counters.forEach(function(el){ cIo.observe(el); });
+  } else {
+    counters.forEach(function(el){ el.textContent = el.getAttribute('data-target'); });
+  }
+
+  // Lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('img[data-lightbox]').forEach(function(img){
+    img.addEventListener('click', function(){
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+})();
+</script>
+
+</body>
+</html>
