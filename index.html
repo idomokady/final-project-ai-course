@@ -20,8 +20,8 @@
     --navy:#0f2748;
     --navy-2:#16345e;
     --steel:#2f5c8f;
-    --accent:#c8a24a;
-    --accent-soft:#e7d6a6;
+    --accent:#4f46e5;
+    --accent-soft:#c7d2fe;
     --ink:#1c2733;
     --muted:#5b6874;
     --line:#e2e6ec;
@@ -60,8 +60,8 @@
   .nav-links{display:flex;align-items:center;gap:26px}
   .nav-links a{color:#cdd8e6;text-decoration:none;font-size:14.5px;font-weight:500;transition:color .15s}
   .nav-links a:hover,.nav-links a.active{color:#fff}
-  .nav-cta{background:var(--accent);color:var(--navy) !important;font-weight:700 !important;padding:9px 18px;border-radius:8px;transition:transform .15s,box-shadow .15s}
-  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(200,162,74,.35)}
+  .nav-cta{background:var(--accent);color:#fff !important;font-weight:700 !important;padding:9px 18px;border-radius:8px;transition:transform .15s,box-shadow .15s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(79,70,229,.35)}
   .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
   .nav-toggle span{width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .2s,opacity .2s}
 
@@ -73,12 +73,12 @@
   header.hero::after{
     content:"";position:absolute;inset:0;
     background:
-      radial-gradient(circle at 85% 15%,rgba(200,162,74,.18),transparent 40%),
+      radial-gradient(circle at 85% 15%,rgba(79,70,229,.18),transparent 40%),
       radial-gradient(circle at 10% 90%,rgba(47,92,143,.35),transparent 45%);
     pointer-events:none;
   }
   .hero-inner{position:relative;z-index:1;padding:76px 24px 68px;max-width:1080px;margin:0 auto}
-  .badge{display:inline-block;border:1px solid rgba(231,214,166,.5);color:var(--accent-soft);
+  .badge{display:inline-block;border:1px solid rgba(199,210,254,.5);color:var(--accent-soft);
     font-size:12px;font-weight:600;letter-spacing:1.5px;padding:6px 14px;border-radius:40px;margin-bottom:24px}
   header.hero h1{font-size:44px;line-height:1.2;font-weight:800;letter-spacing:-.5px;margin-bottom:16px}
   header.hero .sub{font-size:19px;color:#cdd8e6;max-width:640px;margin-bottom:14px}
@@ -90,8 +90,8 @@
   .btn{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;padding:12px 22px;
     border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
   .btn:hover{transform:translateY(-1px)}
-  .btn-gold{background:var(--accent);color:var(--navy)}
-  .btn-gold:hover{box-shadow:0 8px 20px rgba(200,162,74,.3)}
+  .btn-gold{background:var(--accent);color:#fff}
+  .btn-gold:hover{box-shadow:0 8px 20px rgba(79,70,229,.3)}
   .btn-outline{border:1px solid rgba(255,255,255,.35);color:#fff}
   .btn-outline:hover{background:rgba(255,255,255,.08)}
 
@@ -124,7 +124,7 @@
     font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
 
   /* ---------- Problem callout ---------- */
-  .callout{background:linear-gradient(180deg,#fbf7ec,#fff);border:1px solid var(--accent-soft);
+  .callout{background:linear-gradient(180deg,#f1f0fe,#fff);border:1px solid var(--accent-soft);
     border-radius:14px;padding:28px 30px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
   .callout .big{font-size:40px;font-weight:800;color:var(--accent);line-height:1;flex:0 0 auto}
   .callout .txt{flex:1;min-width:240px}
@@ -187,9 +187,9 @@
 
   /* ---------- Footer ---------- */
   footer{background:var(--navy);color:#aebfd4;text-align:center;padding:44px 24px;font-size:14px}
-  footer .cta{display:inline-flex;gap:10px;align-items:center;background:var(--accent);color:var(--navy);
+  footer .cta{display:inline-flex;gap:10px;align-items:center;background:var(--accent);color:#fff;
     font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;margin-bottom:22px;font-size:15px;transition:transform .15s,box-shadow .15s}
-  footer .cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(200,162,74,.3)}
+  footer .cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(79,70,229,.3)}
   footer .foot-links{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
   footer .foot-links a{color:#cdd8e6;text-decoration:none;font-size:13.5px}
   footer .foot-links a:hover{color:#fff}
@@ -285,7 +285,7 @@
         <h3>התאמת חשבוניות</h3>
         <p>השוואה ידנית של PDF ספק מול Salesforce. צורך: חילוץ מ-PDF וחישוב תמחור מורכב.</p>
       </div>
-      <div class="card reveal" style="border-color:var(--accent);box-shadow:0 4px 18px rgba(200,162,74,.14)">
+      <div class="card reveal" style="border-color:var(--accent);box-shadow:0 4px 18px rgba(79,70,229,.14)">
         <span class="chip" style="background:var(--navy);color:#fff">נבחר ✓ · 400K ₪/שנה</span>
         <h3>פרוטוקול ריג'קטים</h3>
         <p>OCR של כתב יד + הבנת תמונה + חילוץ משימות מובנה. ה-ROI הגבוה ביותר וה-use-case המובהק ל-AI.</p>
